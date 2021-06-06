@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covid 19 API</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<style>
+    .creator{
+        height: 50px;
+        width: 200px;
+        background-color: greenyellow;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease-in;
+        margin: auto;
+        margin-top: 10px;
+        
+    }
+    .creator:hover{
+        background-color: wheat;
+        border-radius: 20px;
+        height: 80px;
+        width: 220px;
+        font-size: 15px;
+    }
+    .container{
+        text-align: center;
+        margin: 100px;        
+    }
+    body{
+        background-color: cyan;
+    }
+    h1{
+        text-emphasis: bold;
+    }
+    .button{
+        border-radius: 3px solid black;
+    }
+</style>
+<body>
+    <div class="container">
+        <h1 class="text-center-mt-5">Covid 19 Live Data Tracker</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Total Cases</th>
+                    <th>Total deaths</th>
+                    <th>Total Recovered</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="data">
+
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <button onclick="refreshData()" class="btn btn-danger btn-block">
+            Refresh Data
+        </button>
+        <div class="creator">
+            <p>Created by Roshan Gupta.</p>
+        </div>
+    </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+    init()
+    function init(){
+        var url = "https://api.covid19api.com/summary"
+
+        var data = ''
+
+        $.get(url, function(data){
+                console.log(data.Global)
+
+        data = `
+            <td>${data.Global.TotalConfirmed}</td>
+            <td>${data.Global.TotalDeaths}</td>
+            <td>${data.Global.TotalRecovered}</td>
+                
+            `
+             $("#data").html(data)
+        })
+    }
+    function refreshData(){
+        clearData()
+        init()
+    }
+    function clearData(){
+        $("#data").empty()
+            
+    }
+
+</script>
+</html>
